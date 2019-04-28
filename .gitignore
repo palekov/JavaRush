@@ -1,0 +1,12 @@
+# Numerous always-ignore extensions
+.idea/
+lib/
+out/
+
+# OS or Editor folders
+Thumbs.db
+*.properties
+*.log
+*.iml
+*.png
+
