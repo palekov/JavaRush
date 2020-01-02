@@ -6,83 +6,97 @@ package com.javarush.task.task37.task3707;
         import java.io.Serializable;
         import java.util.*;
 
-/**
- * Created by dell on 09-Jun-17.
- */
-public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneable, Set<E> {
+        import java.io.Serializable;
+        import java.util.*;
+
+//Валидатор не пропускает
+public class AmigoSet<E> extends AbstractSet<E> implements Set<E>, Cloneable, Serializable {
+
     private static final Object PRESENT = new Object();
-    private transient HashMap<E,Object> map;
+    private transient HashMap<E, Object> map;
 
     public AmigoSet() {
-        map = new HashMap<E,Object>();
+        map = new HashMap<>();
     }
 
-    public AmigoSet(Collection<? extends E> collection) {
-        int initialCapacity = Math.max(16, (int)(collection.size() / 0.75)+1);
-        map = new HashMap<E,Object>(initialCapacity);
-        addAll(collection);
+    public AmigoSet(int capacity) {
+        map = new HashMap<>(capacity);
     }
 
-    @Override
-    public boolean add(E e) {
-        return null == map.put(e, PRESENT);
+
+    public AmigoSet(Collection<? extends E> c) {
+        map = new HashMap<>(Math.max((int) (c.size() / .75f) + 1, 16));
+        addAll(c);
     }
 
-    @Override
-    public boolean remove(Object o) {
-        return map.keySet().remove(o);
-    }
 
     @Override
-    public void clear() {
-        map.clear();
+    public Spliterator spliterator() {
+        return null;
     }
-
-    @Override
-    public Iterator<E> iterator() {
-        return map.keySet().iterator();
-    }
-
 
     @Override
     public int size() {
-        return map.size();
+        return 0;
     }
 
     @Override
     public boolean isEmpty() {
-        return map.isEmpty();
+        return false;
     }
 
     @Override
     public boolean contains(Object o) {
-        return map.keySet().contains(o);
+        return false;
     }
 
     @Override
-    public Object clone() {
-        AmigoSet<E> res = null;
-        try {
-            res = (AmigoSet<E>) super.clone();
-            res.map = (HashMap<E, Object>) map.clone();
-        }
-        catch (Exception e) {
-            throw new InternalError();
-        }
-        return res;
+    public Iterator iterator() {
+        return null;
     }
 
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeInt(HashMapReflectionHelper.<Integer>callHiddenMethod(map,"capacity"));
-        out.writeFloat(HashMapReflectionHelper.<Float>callHiddenMethod(map,"loadFactor"));
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        int capacity = in.readInt();
-        float loadFactory = in.readFloat();
-        map = new HashMap<E,Object>(capacity, loadFactory);
+    @Override
+    public Object[] toArray(Object[] a) {
+        return new Object[0];
     }
 
+    @Override
+    public boolean add(E e) {
+        return map.put(e, PRESENT) == null;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection c) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+
+    }
 }

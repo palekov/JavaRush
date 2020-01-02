@@ -1,64 +1,44 @@
 package com.javarush.task.task31.task3105;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.zip.*;
 
 /* 
 Добавление файла в архив
 */
 public class Solution {
-    public static Map<ZipEntry, byte[]> entryMap = new HashMap<>();
-
     public static void main(String[] args) throws IOException {
-        File fileName = new File(args[0]);
-        File zipArchive = new File(args[1]);
+        String fileName = args[0];
+        String zipFileName = args[1];
+        File file = new File(fileName);
 
-
-        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipArchive))) {
-            ZipEntry zipEntry;
-            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+        Map<String, ByteArrayOutputStream> archivedFiles = new HashMap<>();
+        try (ZipInputStream zipReader = new ZipInputStream(new FileInputStream(zipFileName))) {
+            ZipEntry entry;
+            while ((entry = zipReader.getNextEntry()) != null) {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
-                int count;
-
-                while ((count = zipInputStream.read(buffer)) != -1) {
+                int count = 0;
+                while ((count = zipReader.read(buffer)) != -1)
                     byteArrayOutputStream.write(buffer, 0, count);
-                }
-                byte[] bytes = byteArrayOutputStream.toByteArray();
-                entryMap.put(zipEntry, bytes);
+
+                archivedFiles.put(entry.getName(), byteArrayOutputStream);
+            }
+        }
+
+        try (ZipOutputStream zipWriter = new ZipOutputStream(new FileOutputStream(zipFileName))) {
+            for (Map.Entry<String, ByteArrayOutputStream> pair : archivedFiles.entrySet()) {
+                if (pair.getKey().substring(pair.getKey().lastIndexOf("/") + 1).equals(file.getName())) continue;
+                zipWriter.putNextEntry(new ZipEntry(pair.getKey()));
+                zipWriter.write(pair.getValue().toByteArray());
             }
 
-
-            try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipArchive));
-                 FileInputStream fileInputStream = new FileInputStream(fileName)) {
-                boolean isExist = false;
-
-                ZipEntry fileNameComparator = new ZipEntry(fileName.getName());
-
-                for (Map.Entry<ZipEntry, byte[]> zipEntryEntry : entryMap.entrySet()) {
-                    Path path = Paths.get(zipEntryEntry.getKey().getName());
-                    if (!(path.getFileName().toString().equals(fileNameComparator.getName()))) {
-                        zipOutputStream.putNextEntry(new ZipEntry(zipEntryEntry.getKey().getName()));
-                        zipOutputStream.write(zipEntryEntry.getValue());
-                    } else {
-                        isExist = true;
-                    }
-                }
-                if (isExist) {
-                    ZipEntry addingFileEntry = new ZipEntry("new/" + fileName.getName());
-                    zipOutputStream.putNextEntry(addingFileEntry);
-                    byte[] buffer = new byte[fileInputStream.available()];
-                    fileInputStream.read(buffer);
-                    zipOutputStream.write(buffer);
-                    zipOutputStream.closeEntry();
-                }
-            }
+            ZipEntry zipEntry = new ZipEntry("new/" + file.getName());
+            zipWriter.putNextEntry(zipEntry);
+            Files.copy(file.toPath(), zipWriter);
         }
     }
 }

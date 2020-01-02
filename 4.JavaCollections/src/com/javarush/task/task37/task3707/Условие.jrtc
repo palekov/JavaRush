@@ -1,6 +1,4 @@
-taskKey="com.javarush.task.task37.task3707.big05"
-
-AmigoSet (5)
+taskKey="com.javarush.task.task37.task3707.big05"\n\nAmigoSet (5)
 
 Твое собственное множество AmigoSet реализует интерфейс Serializable. Однако, не сериализуется правильно.
 

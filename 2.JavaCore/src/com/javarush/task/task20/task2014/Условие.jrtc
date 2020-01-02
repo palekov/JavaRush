@@ -1,6 +1,4 @@
-taskKey="com.javarush.task.task20.task2014"
-
-Serializable Solution
+taskKey="com.javarush.task.task20.task2014"\n\nSerializable Solution
 
 Сериализуй класс Solution.
 Подумай, какие поля не нужно сериализовать, пометь ненужные поля модификатором transient.

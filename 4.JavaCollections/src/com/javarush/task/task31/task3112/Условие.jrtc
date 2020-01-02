@@ -1,6 +1,4 @@
-taskKey="com.javarush.task.task31.task3112"
-
-Загрузчик файлов
+taskKey="com.javarush.task.task31.task3112"\n\nЗагрузчик файлов
 
 Реализуй метод downloadFile(String urlString, Path downloadDirectory), на вход которого подается ссылка для скачивания файла и папка, куда нужно закачать файл.
 Все ссылки имеют вид:
