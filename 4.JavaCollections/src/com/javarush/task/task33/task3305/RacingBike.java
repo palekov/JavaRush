@@ -1,10 +1,13 @@
 package com.javarush.task.task33.task3305;
 
-public class Motorbike extends Vehicle {
+public class RacingBike extends Motorbike {
     private String owner;
+    private int age;
 
-    public Motorbike(String name) {
-        this.name = name;
+    public RacingBike(String name, String owner, int age) {
+        super(name);
+        this.owner = owner;
+        this.age = age;
     }
 
     public String getName() {
@@ -15,15 +18,16 @@ public class Motorbike extends Vehicle {
         return owner;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public int getAge() {
+        return age;
     }
 
     @Override
     public String toString() {
-        return "Motorbike{" +
+        return "RacingBike{" +
                 "name='" + name + '\'' +
                 ", owner='" + owner + '\'' +
+                ", age=" + age +
                 '}';
     }
 }

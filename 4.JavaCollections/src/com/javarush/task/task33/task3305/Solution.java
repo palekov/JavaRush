@@ -12,22 +12,22 @@ import java.util.List;
 */
 public class Solution {
     public static void main(String[] args) throws IOException {
-        Parking parking = new Parking("Super Parking", "Kyiv");
-        RaceBike raceBike = new RaceBike("Simba", "Peter", 2);
+        ParkingLot parkingLot = new ParkingLot("Super ParkingLot", "Kyiv");
+        RacingBike racingBike = new RacingBike("Simba", "Peter", 2);
         Motorbike motorbike = new Motorbike("Manny");
         Car car = new Car();
-        List<Auto> autos = new ArrayList<>();
-        autos.add(raceBike);
-        autos.add(motorbike);
-        autos.add(car);
-        parking.setAutos(autos);
-        convertToJson(parking);
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles.add(racingBike);
+        vehicles.add(motorbike);
+        vehicles.add(car);
+        parkingLot.setVehicles(vehicles);
+        convertToJson(parkingLot);
     }
 
-    public static void convertToJson(Parking parking) throws IOException {
+    public static void convertToJson(ParkingLot parkingLot) throws IOException {
         StringWriter writer = new StringWriter();
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter().writeValue(writer, parking);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(writer, parkingLot);
         System.out.println(writer.toString());
     }
 }

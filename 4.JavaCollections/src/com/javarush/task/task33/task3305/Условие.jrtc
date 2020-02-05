@@ -1,16 +1,14 @@
-taskKey="com.javarush.task.task33.task3305"
-
-Конвертация из одного класса в другой используя JSON
+taskKey="com.javarush.task.task33.task3305"\n\nКонвертация из одного класса в другой используя JSON
 
 НЕОБХОДИМО: подключенные библиотеки Jackson Core, Bind и Annotation версии 2.8.1
 
 Расставь JSON аннотации так, чтобы результат выполнения метода main был следующим:
 {
-"className" : ".Parking",
-"name" : "Super Parking",
+"className" : ".ParkingLot",
+"name" : "Super ParkingLot",
 "city" : "Kyiv",
-"autos" : [ {
-"className" : "com.javarush.task.task33.task3305.RaceBike",
+"vehicles" : [ {
+"className" : "com.javarush.task.task33.task3305.RacingBike",
 "name" : "Simba",
 "owner" : "Peter",
 "age" : 2
@@ -30,7 +28,7 @@ P.S. Параметр name должен быть равен car, motorbike и ra
 
 Требования:
 1.	Вывод на экран должен соответствовать условию задачи.
-2.	Класс Parking должен быть отмечен аннотацией @JsonTypeInfo с подходящим набором параметров.
-3.	Класс Auto должен быть отмечен аннотацией @JsonTypeInfo с подходящим набором параметров.
+2.	Класс ParkingLot должен быть отмечен аннотацией @JsonTypeInfo с подходящим набором параметров.
+3.	Класс Vehicle должен быть отмечен аннотацией @JsonTypeInfo с подходящим набором параметров.
 
 
